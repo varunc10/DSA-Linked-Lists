@@ -1,0 +1,81 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
+        vector<int> v;
+        int carry=0;
+        int sum=0;
+        int x=0;
+        int y=0;
+        while(l1!=NULL&&l2!=NULL){
+            x=l1->val;
+            y=l2->val;
+            sum=x+y+carry;
+            if(sum>9){
+                carry=sum/10;
+                sum=sum%10;
+            }
+            else{
+                carry=0;
+            }
+            v.push_back(sum);
+            sum=0;
+            l1=l1->next;
+            l2=l2->next;
+        }
+        while(l1!=NULL){
+            x=l1->val;
+            sum=x+carry;
+            if(sum>9){
+                carry=sum/10;
+                sum=sum%10;
+            }
+            else{
+                carry=0;
+            }
+            v.push_back(sum);
+            sum=0;
+            l1=l1->next;
+        }
+        while(l2!=NULL){
+            y=l2->val;
+            sum=y+carry;
+            if(sum>9){
+                carry=sum/10;
+                sum=sum%10;
+            }
+            else{
+                carry=0;
+            }
+            v.push_back(sum);
+            sum=0;
+            l2=l2->next;
+        }
+        if(carry!=0){
+            v.push_back(carry);
+        }
+        for(auto i:v){
+            cout<<i<<" ";
+        }
+        ListNode* temp = new ListNode(v[0]);
+        ListNode* newHead = temp;
+        ListNode* prev = temp;
+        for(int i=1;i<v.size();i++){
+            temp = new ListNode(v[i]);
+            prev->next=temp;
+            prev=prev->next;
+            temp=temp->next;
+        }
+        return newHead;
+     }
+     
+};
