@@ -1,0 +1,45 @@
+/* Node structure  used in the program
+
+struct Node{
+	int data;
+	struct Node * next;
+	struct Node * bottom;
+	
+	Node(int x){
+	    data = x;
+	    next = NULL;
+	    bottom = NULL;
+	}
+	
+};
+*/
+
+/*  Function which returns the  root of 
+    the flattened linked list. */
+Node *mergeSort(Node* a,Node* b){
+    Node* ans;
+    if(!a){
+        return b;
+    }
+    else if(!b){
+        return a;
+    }
+    if(a->data<b->data){
+        ans=a;
+        ans->bottom=mergeSort(a->bottom,b);
+    }
+    else{
+        ans=b;
+        ans->bottom=mergeSort(a,b->bottom);
+    }
+    ans->next=NULL;
+    return ans;
+}    
+Node *flatten(Node *root)
+{
+   // Your code here
+   if(!root||!root->next){
+       return root;
+   }
+   return mergeSort(root,flatten(root->next));
+}
