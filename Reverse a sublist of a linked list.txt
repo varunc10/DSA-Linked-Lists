@@ -1,0 +1,27 @@
+Node* curr=head;
+        stack<int> s;
+        int i=1;
+        while(i!=m){
+            i++;
+            curr=curr->next;
+        }
+        while(i>=m&&i<=n){
+            s.push(curr->data);
+            curr=curr->next;
+            i++;
+        }
+        i=1;
+        Node* temp=head;
+        while(temp!=NULL){
+            if(i>=m&&i<=n){
+                temp->data=s.top();
+                s.pop();
+            }
+            if(i==n){
+                break;
+            }
+            i++;
+            temp=temp->next;
+        }
+        return head;
+    }
