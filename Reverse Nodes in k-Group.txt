@@ -1,0 +1,42 @@
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* reverseKGroup(ListNode* head, int k) {
+        if(!head){
+            return NULL;
+        }
+        vector<vector<int>> ans;
+        ListNode* curr=head;
+        while(curr!=NULL){
+            vector<int> v;
+            int l=k;
+            while(curr!=NULL&&l--){
+                v.push_back(curr->val);
+                curr=curr->next;
+            }
+            ans.push_back(v);
+        }
+        for(int i=0;i<ans.size();i++){
+            if(ans[i].size()==k){
+                reverse(ans[i].begin(),ans[i].end());
+            }
+        }
+        ListNode* sentinel=new ListNode(0);
+        ListNode* newHead=sentinel;
+        for(int i=0;i<ans.size();i++){
+            for(int j=0;j<ans[i].size();j++){
+                ListNode* temp=new ListNode(ans[i][j]);
+                sentinel->next=temp;
+                sentinel=sentinel->next;
+            }
+        }
+        return newHead->next;
+    }
+};
